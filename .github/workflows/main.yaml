@@ -51,6 +51,7 @@ jobs:
 
     - name: Sentinel
       run: |
+        cd main
         ls
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel' '/usr/local/bin/sentinel' 
