@@ -40,6 +40,12 @@ jobs:
         terraform init
       working-directory: main/terraform
 
+    - name: Terraform Plan
+      run: |
+        terraform plan -out sentinel.tfplan
+        terraform show -json sentinel.tfplan > ../../sentinel/plan.json
+      working-directory: main/terraform
+
     - uses: actions/checkout@v4
       with:
         repository: AnnaxGrace/modules_test_child
@@ -55,8 +61,6 @@ jobs:
         ls
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/sentinel' '/usr/local/bin/sentinel' 
-        terraform plan -out sentinel.tfplan
-        terraform show -json sentinel.tfplan > ./plan.json
         node ./scrips/create_mock_plan.js
         # /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
         /usr/local/bin/sentinel/sentinel apply -trace
