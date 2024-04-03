@@ -1,0 +1,46 @@
+name: Demo Sentinel Policy
+
+on:
+  workflow_dispatch:
+ 
+permissions:
+      id-token: write
+      contents: read
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID}}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID}}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+jobs:
+  provision_terraform:
+    name: Terraform Apply Cycle
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - uses: hashicorp/setup-terraform@v3
+
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Run Terraform Cycle
+      run: |
+        git config --global url."https://oauth2:${{ secrets.REPO_TOKEN }}@github.com".insteadOf "https://github.com"
+        terraform init
+        sudo mkdir /usr/local/bin/sentinel
+        sudo cp '/home/runner/work/P-PM-PlatformMod-FG-Sentinel/P-PM-PlatformMod-FG-Sentinel/sentinel' '/usr/local/bin/sentinel' 
+        terraform plan -out sentinel.tfplan
+        terraform show -json sentinel.tfplan > ./plan.json
+        node ./create_mock_plan.js
+        # /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
+        /usr/local/bin/sentinel/sentinel apply -trace
+        # terraform apply -auto-approve -input=false -var-file=./prd.tfvars
