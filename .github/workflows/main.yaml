@@ -39,6 +39,7 @@ jobs:
         cd main
         git config --global url."https://oauth2:${{ secrets.REPO_TOKEN }}@github.com".insteadOf "https://github.com"
         terraform init
+      working-directory: terraform
 
     - uses: actions/checkout@v4
       with:
@@ -51,7 +52,7 @@ jobs:
 
     - name: Sentinel
       run: |
-        cd sentinel
+        # cd sentinel
         ls
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel' '/usr/local/bin/sentinel' 
@@ -61,3 +62,4 @@ jobs:
         # /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
         /usr/local/bin/sentinel/sentinel apply -trace
         # terraform apply -auto-approve -input=false -var-file=./prd.tfvars
+      working-directory: sentinel_policies
