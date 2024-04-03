@@ -40,12 +40,6 @@ jobs:
         terraform init
       working-directory: main/terraform
 
-    - name: Terraform Plan
-      run: |
-        terraform plan -out sentinel.tfplan
-        terraform show -json sentinel.tfplan > ../../sentinel/plan.json
-      working-directory: main/terraform
-
     - uses: actions/checkout@v4
       with:
         repository: AnnaxGrace/modules_test_child
@@ -54,6 +48,12 @@ jobs:
         token: ${{ secrets.REPO_TOKEN }}
         sparse-checkout: |
           sentinel_policies
+
+    - name: Terraform Plan
+      run: |
+        terraform plan -out sentinel.tfplan
+        terraform show -json sentinel.tfplan > ../../sentinel/plan.json
+      working-directory: main/terraform
 
     - name: Sentinel
       run: |
