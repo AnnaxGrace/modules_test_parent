@@ -36,10 +36,9 @@ jobs:
 
     - name: Run Terraform Cycle
       run: |
-        cd main
         git config --global url."https://oauth2:${{ secrets.REPO_TOKEN }}@github.com".insteadOf "https://github.com"
         terraform init
-      working-directory: terraform
+      working-directory: main/terraform
 
     - uses: actions/checkout@v4
       with:
@@ -55,11 +54,11 @@ jobs:
         # cd sentinel
         ls
         sudo mkdir /usr/local/bin/sentinel
-        sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel' '/usr/local/bin/sentinel' 
+        sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/sentinel' '/usr/local/bin/sentinel' 
         terraform plan -out sentinel.tfplan
         terraform show -json sentinel.tfplan > ./plan.json
-        node ./create_mock_plan.js
+        node ./scrips/create_mock_plan.js
         # /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
         /usr/local/bin/sentinel/sentinel apply -trace
         # terraform apply -auto-approve -input=false -var-file=./prd.tfvars
-      working-directory: sentinel_policies
+      working-directory: sentinel/sentinel_policies
