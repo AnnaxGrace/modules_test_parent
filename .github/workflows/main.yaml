@@ -43,7 +43,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         repository: AnnaxGrace/modules_test_child
-        path: main
+        path: sentinel
         ref: skeleton-setup
         token: ${{ secrets.REPO_TOKEN }}
         sparse-checkout: |
@@ -51,7 +51,7 @@ jobs:
 
     - name: Sentinel
       run: |
-        cd main
+        cd sentinel
         ls
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel' '/usr/local/bin/sentinel' 
