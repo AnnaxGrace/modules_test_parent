@@ -37,7 +37,7 @@ jobs:
         git config --global url."https://oauth2:${{ secrets.REPO_TOKEN }}@github.com".insteadOf "https://github.com"
         terraform init
         sudo mkdir /usr/local/bin/sentinel
-        sudo cp '/home/runner/work/P-PM-PlatformMod-FG-Sentinel/P-PM-PlatformMod-FG-Sentinel/sentinel' '/usr/local/bin/sentinel' 
+        sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel' '/usr/local/bin/sentinel' 
         terraform plan -out sentinel.tfplan
         terraform show -json sentinel.tfplan > ./plan.json
         node ./create_mock_plan.js
