@@ -36,6 +36,18 @@ jobs:
       run: |
         git config --global url."https://oauth2:${{ secrets.REPO_TOKEN }}@github.com".insteadOf "https://github.com"
         terraform init
+
+    - uses: actions/checkout@v4
+      with:
+        repository: AnnaxGrace/modules_test_child
+        ref: skeleton-setup
+        token: ${{ secrets.REPO_TOKEN }}
+        sparse-checkout: |
+          sentinel_policies
+
+    - name: Sentinel
+      run: |
+        ls
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel' '/usr/local/bin/sentinel' 
         terraform plan -out sentinel.tfplan
