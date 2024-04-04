@@ -15,4 +15,5 @@ module "virtual_network" {
 #   source   = "git::https://github.com/AnnaxGrace/modules_test_child.git//modules/resource_groups?ref=skeleton-setup"
   source   = "git::https://github.com/AnnaxGrace/modules_test_child.git//modules/resource_groups?ref=skeleton-setup"
   app_name = var.app_name
+  region   = "eus2"
 }
