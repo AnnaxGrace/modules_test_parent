@@ -64,7 +64,8 @@ jobs:
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/sentinel' '/usr/local/bin/sentinel' 
         node ./create_mock_plan.js
-        /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
-        # /usr/local/bin/sentinel/sentinel apply -trace
+        ls
+        # /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
+        /usr/local/bin/sentinel/sentinel apply -trace
         # terraform apply -auto-approve -input=false -var-file=./prd.tfvars
       working-directory: sentinel/sentinel_policies
