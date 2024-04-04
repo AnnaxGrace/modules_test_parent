@@ -69,5 +69,5 @@ jobs:
       working-directory: sentinel/sentinel_policies
 
     - id: test-next
-      if: failure() && steps.here.outcome == 'failure'
+      if: failure() && steps.here.outcome == 'failures'
       run: echo "I DID IT I RAN"
