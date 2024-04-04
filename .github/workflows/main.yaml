@@ -57,10 +57,8 @@ jobs:
       working-directory: main/terraform
 
     - name: Sentinel
+      id: here
       run: |
-        ls
-        echo "here"
-        ls ../
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/sentinel' '/usr/local/bin/sentinel' 
         node ./create_mock_plan.js
@@ -69,3 +67,7 @@ jobs:
         /usr/local/bin/sentinel/sentinel apply -trace
         # terraform apply -auto-approve -input=false -var-file=./prd.tfvars
       working-directory: sentinel/sentinel_policies
+
+    - id: test-next
+      if: failure() && steps.here.outcome == 'failure'
+      run: echo "I DID IT I RAN"
