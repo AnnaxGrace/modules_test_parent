@@ -61,8 +61,8 @@ jobs:
         ls
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/sentinel' '/usr/local/bin/sentinel' 
-        sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/package.json' '../../' 
-        ls ../../
+        sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/package.json' '../' 
+        ls ../
         node ./scrips/create_mock_plan.js
         # /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
         /usr/local/bin/sentinel/sentinel apply -trace
