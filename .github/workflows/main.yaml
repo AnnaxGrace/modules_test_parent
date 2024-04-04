@@ -53,16 +53,16 @@ jobs:
       run: |
         terraform plan -out sentinel.tfplan
         terraform show -json sentinel.tfplan > ../../sentinel/plan.json
+        ls ../../sentinel
       working-directory: main/terraform
 
     - name: Sentinel
       run: |
-        # cd sentinel
         ls
+        echo "here"
+        ls ../
         sudo mkdir /usr/local/bin/sentinel
         sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/sentinel' '/usr/local/bin/sentinel' 
-        # sudo cp '/home/runner/work/modules_test_parent/modules_test_parent/sentinel/sentinel_policies/package.json' '../' 
-        # ls ../
         node ./create_mock_plan.js
         # /usr/local/bin/sentinel/sentinel apply ./naming_convention.sentinel -trace
         /usr/local/bin/sentinel/sentinel apply -trace
