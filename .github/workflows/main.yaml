@@ -52,7 +52,7 @@ jobs:
     - name: Terraform Plan
       run: |
         terraform plan -out sentinel.tfplan
-        terraform show -json sentinel.tfplan > ../../sentinel/plan.json
+        terraform show -json sentinel.tfplan > ../../sentinel/sentinel_polices/plan.json
         ls ../../sentinel
       working-directory: main/terraform
 
